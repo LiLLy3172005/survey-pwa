@@ -9,13 +9,13 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon-192.png" type="image/png" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
-  <meta name="theme-color" content="#2F6FED" />
+  <meta name="theme-color" content="#1B2430" />
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Thanh trạng thái mạng / đồng bộ, luôn hiện ở đầu trang -->
+  <!-- Thanh trạng thái mạng / đồng bộ, kiểu đèn báo thiết bị -->
   <div id="status-bar" class="status-bar status-offline">
     <span id="status-text">Đang kiểm tra kết nối...</span>
   </div>
@@ -29,28 +29,37 @@
 
     <!-- ============ FORM TẠO PHIÊN KHẢO SÁT ============ -->
     <form id="survey-form">
-      <section class="card">
-        <h2>Thông tin phiên phỏng vấn</h2>
+      <section class="field-section">
+        <div class="section-heading">
+          <span class="section-number">01</span>
+          <h2>Thông tin phỏng vấn</h2>
+        </div>
 
         <label for="interviewer-name">Tên người phỏng vấn</label>
         <input type="text" id="interviewer-name" name="interviewerName" required placeholder="Nguyễn Văn A" />
 
         <label>Thời gian phỏng vấn</label>
-        <p id="timestamp-display" class="readonly-field">— sẽ tự động lấy khi bấm Lưu phiên —</p>
+        <p id="timestamp-display" class="readonly-field">Sẽ tự động lấy khi bấm Lưu phiên</p>
 
-        <label>Vị trí (địa điểm khảo sát)</label>
+        <label>Vị trí khảo sát</label>
         <div class="location-row">
-          <button type="button" id="get-location-btn" class="btn btn-secondary">📍 Lấy vị trí hiện tại</button>
+          <button type="button" id="get-location-btn" class="btn btn-secondary">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2c-3 0-5.5 2.4-5.5 5.5C4.5 11.5 10 18 10 18s5.5-6.5 5.5-10.5C15.5 4.4 13 2 10 2Z"/><circle cx="10" cy="7.5" r="2"/></svg>
+            Lấy vị trí hiện tại
+          </button>
           <span id="location-display" class="readonly-field">Chưa lấy vị trí</span>
         </div>
       </section>
 
-      <section class="card">
-        <h2>Câu hỏi khảo sát</h2>
+      <section class="field-section">
+        <div class="section-heading">
+          <span class="section-number">02</span>
+          <h2>Câu hỏi khảo sát</h2>
+        </div>
 
         <label for="q1">1. Bạn đang là sinh viên năm mấy?</label>
         <select id="q1" name="q1" required>
-          <option value="">-- Chọn --</option>
+          <option value="">— Chọn —</option>
           <option>Năm 1</option>
           <option>Năm 2</option>
           <option>Năm 3</option>
@@ -60,7 +69,7 @@
 
         <label for="q2">2. Bạn có đang đi làm thêm không?</label>
         <select id="q2" name="q2" required>
-          <option value="">-- Chọn --</option>
+          <option value="">— Chọn —</option>
           <option>Có, liên quan đến ngành học</option>
           <option>Có, không liên quan đến ngành học</option>
           <option>Không</option>
@@ -76,21 +85,36 @@
         <textarea id="q5" name="q5" rows="3" required placeholder="Chia sẻ ngắn gọn..."></textarea>
       </section>
 
-      <section class="card">
-        <h2>Ảnh hiện trường</h2>
-        <label for="photo-input" class="btn btn-secondary photo-label">📷 Chụp / chọn ảnh</label>
+      <section class="field-section">
+        <div class="section-heading">
+          <span class="section-number">03</span>
+          <h2>Ảnh hiện trường</h2>
+        </div>
+        <label for="photo-input" class="btn btn-secondary photo-label">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7.5c0-.6.4-1 1-1h1.8l.7-1.3c.2-.4.6-.7 1-.7h4.9c.4 0 .8.3 1 .7l.7 1.3H16c.6 0 1 .4 1 1v8c0 .6-.4 1-1 1H4c-.6 0-1-.4-1-1v-8Z"/><circle cx="10" cy="11.5" r="2.6"/></svg>
+          Chụp / chọn ảnh
+        </label>
         <input type="file" id="photo-input" accept="image/*" capture="environment" hidden />
         <img id="photo-preview" class="photo-preview" hidden alt="Ảnh hiện trường đã chụp" />
       </section>
 
-      <button type="submit" class="btn btn-primary btn-block">💾 Lưu phiên khảo sát</button>
+      <button type="submit" class="btn btn-primary btn-block">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4.5c0-.6.4-1 1-1h8.6l2.4 2.4V15.5c0 .6-.4 1-1 1H5c-.6 0-1-.4-1-1v-11Z"/><path d="M6.5 3.5V8h6V3.5"/><path d="M6.5 12h7"/></svg>
+        Lưu phiên khảo sát
+      </button>
     </form>
 
     <!-- ============ DANH SÁCH PHIÊN ĐÃ LƯU ============ -->
-    <section class="card">
-      <div class="section-header">
-        <h2>Các phiên đã lưu trên máy</h2>
-        <button id="sync-now-btn" type="button" class="btn btn-secondary btn-small">🔄 Đồng bộ ngay</button>
+    <section class="field-section">
+      <div class="section-header-row">
+        <div class="section-heading">
+          <span class="section-number">04</span>
+          <h2>Phiên đã lưu trên máy</h2>
+        </div>
+        <button id="sync-now-btn" type="button" class="btn btn-secondary btn-small">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 8a6 6 0 0 0-10.5-3.5M4 4v3.5h3.5"/><path d="M4 12a6 6 0 0 0 10.5 3.5M16 16v-3.5h-3.5"/></svg>
+          Đồng bộ
+        </button>
       </div>
       <ul id="sessions-list" class="sessions-list">
         <li class="empty-state">Chưa có phiên nào.</li>

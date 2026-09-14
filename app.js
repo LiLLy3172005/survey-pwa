@@ -58,13 +58,13 @@ function updateStatusBar(mode) {
   statusBar.className = "status-bar";
   if (mode === "online") {
     statusBar.classList.add("status-online");
-    statusText.textContent = "🟢 Đang online — dữ liệu mới sẽ tự động đồng bộ";
+    statusText.textContent = "ONLINE — dữ liệu mới sẽ tự động đồng bộ";
   } else if (mode === "syncing") {
     statusBar.classList.add("status-syncing");
-    statusText.textContent = "🔄 Đang đồng bộ dữ liệu lên Google Sheet...";
+    statusText.textContent = "ĐANG ĐỒNG BỘ dữ liệu lên Google Sheet...";
   } else {
     statusBar.classList.add("status-offline");
-    statusText.textContent = "🟠 Đang offline — dữ liệu được lưu tạm trên máy";
+    statusText.textContent = "OFFLINE — dữ liệu được lưu tạm trên máy";
   }
 }
 
@@ -190,7 +190,7 @@ async function renderSessionsList() {
           <div class="session-time">${session.timestamp}</div>
         </div>
         <span class="badge ${session.synced ? "badge-synced" : "badge-pending"}">
-          ${session.synced ? "✔ Đã đồng bộ" : "⏳ Chờ đồng bộ"}
+          ${session.synced ? "Đã đồng bộ" : "Chờ đồng bộ"}
         </span>
       `;
       sessionsList.appendChild(li);
