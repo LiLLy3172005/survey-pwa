@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khảo sát nhu cầu việc làm sinh viên</title>
+  <meta name="description" content="Ứng dụng điều tra hiện trường phỏng vấn nhu cầu việc làm của sinh viên, hoạt động offline." />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="theme-color" content="#2F6FED" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Thanh trạng thái mạng / đồng bộ, luôn hiện ở đầu trang -->
+  <div id="status-bar" class="status-bar status-offline">
+    <span id="status-text">Đang kiểm tra kết nối...</span>
+  </div>
+
+  <header class="app-header">
+    <h1>Khảo sát việc làm sinh viên</h1>
+    <p class="subtitle">Ứng dụng điều tra hiện trường — hoạt động cả khi mất mạng</p>
+  </header>
+
+  <main class="container">
+
+    <!-- ============ FORM TẠO PHIÊN KHẢO SÁT ============ -->
+    <form id="survey-form">
+      <section class="card">
+        <h2>Thông tin phiên phỏng vấn</h2>
+
+        <label for="interviewer-name">Tên người phỏng vấn</label>
+        <input type="text" id="interviewer-name" name="interviewerName" required placeholder="Nguyễn Văn A" />
+
+        <label>Thời gian phỏng vấn</label>
+        <p id="timestamp-display" class="readonly-field">— sẽ tự động lấy khi bấm Lưu phiên —</p>
+
+        <label>Vị trí (địa điểm khảo sát)</label>
+        <div class="location-row">
+          <button type="button" id="get-location-btn" class="btn btn-secondary">📍 Lấy vị trí hiện tại</button>
+          <span id="location-display" class="readonly-field">Chưa lấy vị trí</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Câu hỏi khảo sát</h2>
+
+        <label for="q1">1. Bạn đang là sinh viên năm mấy?</label>
+        <select id="q1" name="q1" required>
+          <option value="">-- Chọn --</option>
+          <option>Năm 1</option>
+          <option>Năm 2</option>
+          <option>Năm 3</option>
+          <option>Năm 4</option>
+          <option>Năm 5 trở lên</option>
+        </select>
+
+        <label for="q2">2. Bạn có đang đi làm thêm không?</label>
+        <select id="q2" name="q2" required>
+          <option value="">-- Chọn --</option>
+          <option>Có, liên quan đến ngành học</option>
+          <option>Có, không liên quan đến ngành học</option>
+          <option>Không</option>
+        </select>
+
+        <label for="q3">3. Loại công việc mong muốn sau khi ra trường?</label>
+        <input type="text" id="q3" name="q3" required placeholder="Ví dụ: Lập trình viên, nhân viên marketing..." />
+
+        <label for="q4">4. Mức lương khởi điểm mong muốn (VNĐ/tháng)?</label>
+        <input type="text" id="q4" name="q4" required placeholder="Ví dụ: 8.000.000" />
+
+        <label for="q5">5. Khó khăn lớn nhất khi tìm việc là gì?</label>
+        <textarea id="q5" name="q5" rows="3" required placeholder="Chia sẻ ngắn gọn..."></textarea>
+      </section>
+
+      <section class="card">
+        <h2>Ảnh hiện trường</h2>
+        <label for="photo-input" class="btn btn-secondary photo-label">📷 Chụp / chọn ảnh</label>
+        <input type="file" id="photo-input" accept="image/*" capture="environment" hidden />
+        <img id="photo-preview" class="photo-preview" hidden alt="Ảnh hiện trường đã chụp" />
+      </section>
+
+      <button type="submit" class="btn btn-primary btn-block">💾 Lưu phiên khảo sát</button>
+    </form>
+
+    <!-- ============ DANH SÁCH PHIÊN ĐÃ LƯU ============ -->
+    <section class="card">
+      <div class="section-header">
+        <h2>Các phiên đã lưu trên máy</h2>
+        <button id="sync-now-btn" type="button" class="btn btn-secondary btn-small">🔄 Đồng bộ ngay</button>
+      </div>
+      <ul id="sessions-list" class="sessions-list">
+        <li class="empty-state">Chưa có phiên nào.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 · Khảo sát việc làm sinh viên</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
